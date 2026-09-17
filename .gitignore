@@ -1,0 +1,7 @@
+_bak-*/
+_archive-old/
+_shots/
+_shots_v2/
+_shots_callpopup/
+__pycache__/
+*.ceu.json

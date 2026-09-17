@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ezraplastering.com/sitemap.xml
