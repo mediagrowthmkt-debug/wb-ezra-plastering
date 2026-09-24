@@ -5,3 +5,7 @@ _shots_v2/
 _shots_callpopup/
 __pycache__/
 *.ceu.json
+# add por mg-publicar-site (nao subir lixo)
+*.bak*
+.DS_Store
+_drive-materiais/

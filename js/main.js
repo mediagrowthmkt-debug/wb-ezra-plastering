@@ -304,3 +304,26 @@ function initPopups() {
   // bind the forms that live inside the popups
   document.querySelectorAll('.ezmodal form.lead-form').forEach(setupLeadForm);
 }
+
+/* ---------- Home: filtro da galeria de projetos (base: Innov) ---------- */
+(function () {
+  function initWorkFilter() {
+    var bar = document.querySelector('.work-gallery .filterbar');
+    if (!bar) return;
+    var btns = bar.querySelectorAll('.filter-btn');
+    var items = document.querySelectorAll('.work-gallery .pf-item');
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        btns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+        btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true');
+        var f = btn.dataset.filter;
+        items.forEach(function (it) {
+          var cats = (it.dataset.cat || '').split(' ');
+          it.classList.toggle('is-hidden', !(f === 'all' || cats.indexOf(f) > -1));
+        });
+      });
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initWorkFilter);
+  else initWorkFilter();
+})();
