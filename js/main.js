@@ -208,6 +208,10 @@ function setupLeadForm(form) {
     };
 
     try {
+      if (typeof gtag === 'function') gtag('event', 'generate_lead', { lead_type: leadType, lead_method: isCallForm ? 'call_request' : 'form', page_path: location.pathname });
+    } catch (err) { /* analytics never blocks the lead */ }
+
+    try {
       await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
     } catch (err) { /* proxy also logs a fallback copy; never block the call */ }
     finally {
