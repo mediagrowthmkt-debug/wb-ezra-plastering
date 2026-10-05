@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Ezra Plastering | Links</title>
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="Ezra Plastering: owner-on-site plastering in Greater Boston. Estimate, call, services, portfolio and reviews."/>
+<meta name="theme-color" content="#0A1E4D"/>
+<link rel="icon" type="image/png" href="assets/logo.png"/>
+<link rel="apple-touch-icon" href="assets/logo.png"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Ezra Plastering"/>
+<meta property="og:description" content="Estimate, call, services, portfolio and reviews in one place."/>
+<meta property="og:image" content="https://ezraplastering.com/images/og-image.jpg"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+<style>
+/* ====================================================================
+   MEDIAGROWTH · MOTOR LINK IN BIO (template parametrizável)
+   Cores e tema vêm de CONFIG.theme (injetadas em :root via JS).
+   3 fundos: "ocean" (ondas+bolhas) · "aurora" (blobs) · "gradient" (liso)
+   ==================================================================== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --c1:#0A1E4D;          /* cor principal (escura) */
+  --c2:#1F5FAE;          /* cor secundária / acento */
+  --accent:#19a0bd;      /* botão destaque (feature) */
+  --aqua:#7FD8E8;        /* brilho / realce */
+  --bg1:#0c245c;         /* topo do fundo */
+  --bg2:#071537;         /* base do fundo */
+  --white:#FFFFFF;
+  --glass:rgba(255,255,255,.10);
+  --glass-bd:rgba(255,255,255,.20);
+  --glass-hi:rgba(255,255,255,.18);
+  --txt-soft:rgba(255,255,255,.72);
+  --fh:'Sora',sans-serif;
+  --fb:'Inter',sans-serif;
+  --maxw:480px;
+}
+html{scroll-behavior:smooth;background:var(--bg2)}
+body{
+  font-family:var(--fb);color:var(--white);min-height:100dvh;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(120% 75% at 50% -10%, color-mix(in srgb, var(--c2) 55%, var(--bg1)) 0%, rgba(0,0,0,0) 55%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--c1) 26%, color-mix(in srgb, var(--c1) 80%, var(--bg2)) 55%, var(--bg2) 100%);
+  background-repeat:no-repeat;background-size:100% 100%;
+}
+
+/* ===== CAMADAS DE FUNDO ===== */
+.bgfx{position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none}
+.bgfx::before{content:'';position:absolute;inset:-20%;
+  background:
+    radial-gradient(40% 30% at 20% 12%, color-mix(in srgb, var(--aqua) 18%, transparent), transparent 70%),
+    radial-gradient(45% 35% at 85% 8%, color-mix(in srgb, var(--c2) 22%, transparent), transparent 70%);
+  filter:blur(8px);animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate3d(-2%,-1%,0) scale(1)}to{transform:translate3d(3%,2%,0) scale(1.08)}}
+
+/* aurora blobs (theme=aurora) */
+.aurora{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;display:none}
+body[data-bg="aurora"] .aurora{display:block}
+.aurora span{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;mix-blend-mode:screen}
+.aurora .b1{width:46vw;height:46vw;left:-10vw;top:-6vh;background:var(--c2);animation:float1 16s ease-in-out infinite}
+.aurora .b2{width:40vw;height:40vw;right:-12vw;top:8vh;background:var(--accent);animation:float2 20s ease-in-out infinite}
+.aurora .b3{width:38vw;height:38vw;left:18vw;bottom:-10vh;background:var(--aqua);opacity:.35;animation:float1 22s ease-in-out infinite reverse}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(6%,8%)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-7%,5%)}}
+
+/* bolhas (theme=ocean) */
+.bubbles{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;display:none}
+body[data-bg="ocean"] .bubbles{display:block}
+.bubble{position:absolute;bottom:-40px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.5), color-mix(in srgb, var(--aqua) 12%, transparent) 60%, transparent 72%);
+  box-shadow:inset 0 0 6px rgba(255,255,255,.35);animation:rise linear infinite;opacity:0}
+@keyframes rise{0%{transform:translateY(0) translateX(0) scale(.6);opacity:0}10%{opacity:.7}90%{opacity:.5}100%{transform:translateY(-112dvh) translateX(22px) scale(1);opacity:0}}
+
+/* ondas (theme=ocean) */
+.waves{position:fixed;left:0;right:0;bottom:0;z-index:-1;width:100%;height:34vh;min-height:200px;pointer-events:none;display:none}
+body[data-bg="ocean"] .waves{display:block}
+.waves svg{width:100%;height:100%;display:block}
+.w1{animation:sway 9s ease-in-out infinite}
+.w2{animation:sway 13s ease-in-out infinite reverse}
+.w3{animation:sway 17s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:translateX(0)}50%{transform:translateX(-26px)}}
+
+@media(prefers-reduced-motion:reduce){.bgfx::before,.bubble,.w1,.w2,.w3,.aurora span{animation:none!important}}
+
+/* ===== WRAPPER ===== */
+.wrap{position:relative;z-index:1;width:min(var(--maxw),92%);margin-inline:auto;
+  padding:clamp(2.2rem,7vw,3.4rem) 0 7rem;display:flex;flex-direction:column;align-items:center}
+
+/* ===== CABEÇALHO ===== */
+.head{text-align:center;margin-bottom:1.8rem}
+.logo-halo{width:148px;height:148px;margin:0 auto .9rem;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:radial-gradient(circle, color-mix(in srgb, var(--c2) 45%, transparent) 0%, rgba(0,0,0,0) 70%);position:relative}
+.logo-halo::after{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:0 0 60px 6px color-mix(in srgb, var(--aqua) 30%, transparent)}
+.logo-halo img{width:124px;height:auto;display:block;position:relative;z-index:1;filter:drop-shadow(0 6px 18px rgba(0,0,0,.45))}
+.head h1{font-family:var(--fh);font-weight:800;font-size:1.46rem;letter-spacing:.3px;margin-bottom:.35rem}
+.head .tag{font-size:.92rem;color:var(--txt-soft);line-height:1.55;max-width:330px;margin:0 auto}
+.head .loc{display:inline-flex;align-items:center;gap:.4rem;margin-top:.7rem;font-size:.74rem;color:var(--aqua);font-weight:600;letter-spacing:.4px;
+  background:var(--glass);border:1px solid var(--glass-bd);border-radius:999px;padding:.34rem .85rem;backdrop-filter:blur(8px)}
+.head .loc[hidden]{display:none}
+
+/* ===== BOTÕES ===== */
+.links{width:100%;display:flex;flex-direction:column;gap:.85rem}
+.lnk{--ac:var(--c2);display:flex;align-items:center;gap:.95rem;width:100%;text-align:left;text-decoration:none;cursor:pointer;
+  background:var(--glass);border:1px solid var(--glass-bd);border-radius:16px;padding:1rem 1.1rem;color:var(--white);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 4px 22px rgba(3,12,35,.30), inset 0 1px 0 var(--glass-hi);
+  transition:transform .18s ease, box-shadow .25s ease, background .25s ease, border-color .25s;font-family:var(--fb)}
+.lnk:hover,.lnk:focus-visible{transform:translateY(-2px);background:rgba(255,255,255,.16);border-color:color-mix(in srgb, var(--aqua) 55%, transparent);
+  box-shadow:0 10px 30px rgba(3,12,35,.42), inset 0 1px 0 var(--glass-hi);outline:none}
+.lnk:active{transform:translateY(0)}
+.lnk .ic{flex-shrink:0;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.12rem;
+  background:linear-gradient(145deg, var(--ac), rgba(255,255,255,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.25);color:var(--white)}
+.lnk .tx{flex:1;min-width:0}
+.lnk .tx b{display:block;font-family:var(--fh);font-weight:700;font-size:.98rem;line-height:1.25}
+.lnk .tx span{display:block;font-size:.76rem;color:var(--txt-soft);margin-top:.12rem;line-height:1.35}
+.lnk .arrow{flex-shrink:0;color:var(--txt-soft);font-size:.85rem;transition:transform .2s,color .2s}
+.lnk:hover .arrow{transform:translateX(3px);color:var(--aqua)}
+.lnk.feature{--ac:var(--accent);background:linear-gradient(135deg, color-mix(in srgb,var(--accent) 30%,transparent), color-mix(in srgb,var(--c2) 30%,transparent));
+  border-color:color-mix(in srgb, var(--aqua) 45%, transparent)}
+
+/* ===== ACORDEÃO (e-books / sublista) ===== */
+.sub-panel{width:100%;overflow:hidden;max-height:0;opacity:0;transition:max-height .45s ease, opacity .35s ease, margin .35s ease}
+.sub-panel.open{max-height:2200px;opacity:1;margin-top:.85rem}
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.card{display:flex;flex-direction:column;text-decoration:none;color:var(--white);background:var(--glass);border:1px solid var(--glass-bd);
+  border-radius:14px;overflow:hidden;backdrop-filter:blur(10px);transition:transform .2s,border-color .2s,box-shadow .25s}
+.card:hover{transform:translateY(-3px);border-color:color-mix(in srgb, var(--aqua) 50%, transparent);box-shadow:0 10px 26px rgba(3,12,35,.4)}
+.card .cover{position:relative;width:100%;padding-top:132%;background:var(--c1);overflow:hidden}
+.card .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .cover .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--aqua);background:linear-gradient(145deg,var(--c1),var(--bg2))}
+.card .meta{padding:.6rem .7rem .75rem}
+.card .meta b{font-family:var(--fh);font-size:.78rem;font-weight:700;line-height:1.25;display:block}
+.card .meta em{font-style:normal;display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;color:var(--aqua);margin-top:.35rem;font-weight:600}
+.sub-empty{grid-column:1/-1;text-align:center;font-size:.82rem;color:var(--txt-soft);padding:1.2rem;border:1px dashed var(--glass-bd);border-radius:12px}
+.chev{transition:transform .35s ease}
+.lnk[aria-expanded="true"] .chev{transform:rotate(180deg)}
+
+/* ===== REDES ===== */
+.socials{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem;margin-top:2.2rem}
+.socials a{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.12rem;
+  color:var(--white);text-decoration:none;background:var(--glass);border:1px solid var(--glass-bd);backdrop-filter:blur(10px);
+  transition:transform .2s,background .25s,border-color .25s,color .2s}
+.socials a:hover{transform:translateY(-3px) scale(1.06);background:var(--c2);border-color:var(--aqua);color:#fff}
+.foot{margin-top:1.6rem;text-align:center;font-size:.72rem;color:rgba(255,255,255,.45);line-height:1.7}
+.foot a{color:rgba(255,255,255,.6);text-decoration:none}
+.foot a:hover{color:var(--aqua)}
+
+/* ===== MODAL ===== */
+.modal-bg{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:1.2rem;background:rgba(5,14,38,.72);backdrop-filter:blur(6px)}
+.modal-bg.open{display:flex;animation:fade .25s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{width:min(420px,100%);background:linear-gradient(165deg, color-mix(in srgb,var(--c1) 80%,var(--c2)), var(--c1));border:1px solid var(--glass-bd);
+  border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.55);padding:1.6rem 1.4rem 1.5rem;position:relative;animation:pop .3s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{transform:translateY(14px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.modal .x{position:absolute;top:.9rem;right:1rem;background:none;border:0;color:var(--txt-soft);font-size:1.3rem;cursor:pointer;line-height:1}
+.modal .x:hover{color:#fff}
+.modal .m-ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  background:linear-gradient(145deg,var(--accent),var(--c2));margin-bottom:.9rem}
+.modal h3{font-family:var(--fh);font-weight:800;font-size:1.2rem;margin-bottom:.35rem}
+.modal p{font-size:.84rem;color:var(--txt-soft);line-height:1.6;margin-bottom:1.1rem}
+.field{margin-bottom:.8rem}
+.field label{display:block;font-size:.74rem;font-weight:600;color:var(--aqua);margin-bottom:.35rem;letter-spacing:.3px}
+.field input{width:100%;border:1.5px solid rgba(255,255,255,.2);border-radius:12px;padding:.85rem .95rem;font:500 .92rem var(--fb);color:#fff;
+  background:rgba(255,255,255,.06);outline:none;transition:border-color .2s,box-shadow .2s}
+.field input::placeholder{color:rgba(255,255,255,.4)}
+.field input:focus{border-color:var(--aqua);box-shadow:0 0 0 3px color-mix(in srgb, var(--aqua) 18%, transparent)}
+.btn-submit{width:100%;border:0;border-radius:12px;cursor:pointer;margin-top:.4rem;padding:.95rem;font:700 .92rem var(--fh);color:#062a18;
+  background:linear-gradient(135deg,#25d366,#1aa64f);display:flex;align-items:center;justify-content:center;gap:.5rem;
+  box-shadow:0 6px 20px rgba(37,211,102,.35);transition:transform .18s,box-shadow .25s}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,211,102,.45)}
+.m-note{font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.85rem;line-height:1.5;text-align:center}
+
+@media(max-width:380px){.logo-halo{width:130px;height:130px}.logo-halo img{width:108px}}
+</style>
+</head>
+<body>
+
+<div class="bgfx" aria-hidden="true"></div>
+<div class="aurora" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+<div class="bubbles" id="bubbles" aria-hidden="true"></div>
+<div class="waves" aria-hidden="true">
+  <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+    <path class="w3" fill="var(--c1)" fill-opacity="0.6" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,202.7C960,181,1056,139,1152,138.7C1248,139,1344,181,1392,202.7L1440,224L1440,320L0,320Z"/>
+    <path class="w2" fill="var(--c2)" fill-opacity="0.35" d="M0,256L48,250.7C96,245,192,235,288,213.3C384,192,480,160,576,165.3C672,171,768,213,864,229.3C960,245,1056,235,1152,224C1248,213,1344,203,1392,197.3L1440,192L1440,320L0,320Z"/>
+    <path class="w1" fill="var(--aqua)" fill-opacity="0.30" d="M0,288L48,277.3C96,267,192,245,288,245.3C384,245,480,267,576,272C672,277,768,267,864,250.7C960,235,1056,213,1152,213.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L0,320Z"/>
+  </svg>
+</div>
+
+<main class="wrap">
+  <header class="head">
+    <div class="logo-halo"><img id="logo" src="assets/logo.png" alt=""/></div>
+    <h1 id="orgName"></h1>
+    <p class="tag" id="orgTag"></p>
+    <span class="loc" id="orgLoc" hidden></span>
+  </header>
+  <nav class="links" id="links" aria-label="Links"></nav>
+  <div class="socials" id="socials" aria-label="Redes sociais"></div>
+  <footer class="foot" id="foot"></footer>
+</main>
+
+<!-- MODAL (formulário: voluntário, contato, lista de espera, etc.) -->
+<div class="modal-bg" id="formModal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+  <div class="modal">
+    <button class="x" id="formClose" aria-label="Fechar">&times;</button>
+    <div class="m-ic"><i class="fa-solid fa-hand-holding-heart" id="formIcon"></i></div>
+    <h3 id="formTitle"></h3>
+    <p id="formDesc"></p>
+    <form id="leadForm" novalidate>
+      <div class="field"><label for="fNome">Seu nome</label><input type="text" id="fNome" placeholder="Como podemos te chamar?" autocomplete="name" required/></div>
+      <div class="field"><label for="fFone">Seu WhatsApp / telefone</label><input type="tel" id="fFone" placeholder="(00) 0 0000-0000" autocomplete="tel" required/></div>
+      <button type="submit" class="btn-submit"><i class="fa-brands fa-whatsapp"></i> <span id="formBtn">Enviar</span></button>
+    </form>
+    <p class="m-note">Seus dados são usados só para entrar em contato.</p>
+  </div>
+</div>
+
+<script>
+/* ====================================================================
+   ⚙️ CONFIG — edite TUDO aqui (cores, links, sublistas, redes, WhatsApp).
+   ==================================================================== */
+const CONFIG = {
+  nome: "Ezra Plastering",
+  tagline: "Owner-on-site plastering in Greater Boston",
+  local: "Boston · Newton · Brookline · Melrose",
+  site: "ezraplastering.com",
+  rodape: "Ezra Plastering Corp · Venetian, microcement, tadelakt and plaster repair",
+  whatsapp: "16174617575",
+  theme: {
+    c1: "#1C1C1C", c2: "#2E54A6", accent: "#2E54A6", aqua: "#9DB6E8",
+    bg1: "#22314f", bg2: "#111111", background: "gradient",
+    logo: "assets/logo.png"
+  },
+  links: [
+    { titulo: "Get a free written estimate", sub: "Photos + a flat price before we start", icon: "fa-solid fa-file-invoice-dollar", url: "https://ezraplastering.com/contact/?utm_source=instagram&utm_medium=social&utm_campaign=link_in_bio", feature: true },
+    { titulo: "Call the owner", sub: "(617) 461-7575", icon: "fa-solid fa-phone", url: "tel:+16174617575" },
+    { titulo: "Text us a photo", sub: "Fastest way to get a price", icon: "fa-solid fa-comment-sms", url: "sms:+16174617575" },
+    { titulo: "Our services", sub: "Venetian · Microcement · Tadelakt · Repair", icon: "fa-solid fa-trowel", url: "https://ezraplastering.com/services/?utm_source=instagram&utm_medium=social&utm_campaign=link_in_bio" },
+    { titulo: "See our work", sub: "Before and after, real projects", icon: "fa-solid fa-images", url: "https://ezraplastering.com/portfolio/?utm_source=instagram&utm_medium=social&utm_campaign=link_in_bio" },
+    { titulo: "Read our reviews", sub: "What Greater Boston homeowners say", icon: "fa-solid fa-star", url: "https://ezraplastering.com/reviews/?utm_source=instagram&utm_medium=social&utm_campaign=link_in_bio" },
+    { titulo: "Leave us a Google review", sub: "It helps a small local business", icon: "fa-brands fa-google", url: "https://g.page/r/CecxBnn8LRRQEBM/review" },
+    { titulo: "WhatsApp", sub: "Prefer WhatsApp? We answer there too", icon: "fa-brands fa-whatsapp", action: "contato", msg: "Hi! I found you on social media and I'd like an estimate." }
+  ],
+  crmEndpoint: "",
+  socials: [
+    { rede:"Instagram", icon:"fa-brands fa-instagram", url:"https://www.instagram.com/ezraplastering/" },
+    { rede:"YouTube", icon:"fa-brands fa-youtube", url:"https://www.youtube.com/@ezraplastering" },
+    { rede:"Pinterest", icon:"fa-brands fa-pinterest-p", url:"https://www.pinterest.com/ezraplastering/" },
+    { rede:"Google", icon:"fa-brands fa-google", url:"https://g.page/r/CecxBnn8LRRQEBM/review" }
+  ]
+};
+
+/* ====================================================================
+   RENDER (não precisa mexer abaixo)
+   ==================================================================== */
+const T = CONFIG.theme;
+['c1','c2','accent','aqua','bg1','bg2'].forEach(k => document.documentElement.style.setProperty('--'+k, T[k]));
+document.body.setAttribute('data-bg', T.background || 'gradient');
+document.getElementById('logo').src = T.logo || 'assets/logo.png';
+document.getElementById('logo').alt = CONFIG.nome;
+document.getElementById('orgName').textContent = CONFIG.nome;
+document.getElementById('orgTag').textContent = CONFIG.tagline || '';
+if (CONFIG.local){ const l=document.getElementById('orgLoc'); l.hidden=false; l.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${CONFIG.local}`; }
+document.title = CONFIG.nome + ' | Links';
+document.getElementById('foot').innerHTML = (CONFIG.rodape||'') + (CONFIG.site ? `<br/><a href="https://${CONFIG.site}/" target="_blank" rel="noopener">${CONFIG.site}</a>` : '');
+
+const waLink = (msg) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg||'')}`;
+const linksEl = document.getElementById('links');
+let subSeq = 0;
+
+CONFIG.links.forEach(l => {
+  const isLink = !!l.url;
+  const el = document.createElement(isLink ? 'a' : 'button');
+  el.className = 'lnk' + (l.feature ? ' feature' : '');
+  if (!isLink) el.type = 'button';
+  if (isLink){ el.href = l.url; el.target = '_blank'; el.rel = 'noopener'; }
+  const isSub = l.action === 'sub';
+  el.innerHTML = `
+    <span class="ic"><i class="${l.icon||'fa-solid fa-link'}"></i></span>
+    <span class="tx"><b>${l.titulo}</b><span>${l.sub||''}</span></span>
+    <span class="arrow">${isSub ? '<i class="fa-solid fa-chevron-down chev"></i>' : '<i class="fa-solid fa-arrow-right"></i>'}</span>`;
+
+  if (isSub){
+    const id = 'sub'+(subSeq++);
+    el.setAttribute('aria-expanded','false');
+    el.addEventListener('click', () => toggleSub(el, id));
+    linksEl.appendChild(el);
+    const panel = document.createElement('div');
+    panel.className = 'sub-panel'; panel.id = id;
+    const items = l.items || [];
+    panel.innerHTML = items.length === 0
+      ? `<div class="sub-grid"><div class="sub-empty">Em breve novidades por aqui. ✨</div></div>`
+      : `<div class="sub-grid">` + items.map(b => `
+          <a class="card" href="${b.url}" target="_blank" rel="noopener">
+            <span class="cover">${b.cover
+              ? `<img src="${b.cover}" alt="${b.titulo}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="ph" style="display:none"><i class="fa-solid fa-book"></i></span>`
+              : `<span class="ph"><i class="fa-solid fa-book"></i></span>`}</span>
+            <span class="meta"><b>${b.titulo}</b><em><i class="fa-solid fa-arrow-up-right-from-square"></i> Acessar</em></span>
+          </a>`).join('') + `</div>`;
+    linksEl.appendChild(panel);
+  } else {
+    if (l.action === 'modal') el.addEventListener('click', () => openForm(l.form||{}));
+    else if (l.action === 'contato') el.addEventListener('click', () => window.open(waLink(l.msg), '_blank'));
+    linksEl.appendChild(el);
+  }
+});
+
+function toggleSub(btn, id){
+  const panel = document.getElementById(id);
+  const open = panel.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) setTimeout(() => panel.scrollIntoView({behavior:'smooth', block:'nearest'}), 150);
+}
+
+const socEl = document.getElementById('socials');
+(CONFIG.socials||[]).forEach(s => {
+  const a = document.createElement('a');
+  a.href = s.url; a.target = '_blank'; a.rel = 'noopener';
+  a.setAttribute('aria-label', s.rede); a.title = s.rede;
+  a.innerHTML = `<i class="${s.icon}"></i>`;
+  socEl.appendChild(a);
+});
+
+/* MODAL / formulário */
+const modal = document.getElementById('formModal');
+let CURRENT_FORM = {};
+function openForm(f){
+  CURRENT_FORM = f;
+  document.getElementById('formTitle').textContent = f.titulo || 'Fale com a gente';
+  document.getElementById('formDesc').textContent = f.desc || '';
+  document.getElementById('formBtn').textContent = f.btn || 'Enviar';
+  if (f.icon) document.getElementById('formIcon').className = f.icon;
+  modal.classList.add('open'); document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('fNome').focus(),120);
+}
+function closeForm(){ modal.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('formClose').addEventListener('click', closeForm);
+modal.addEventListener('click', e => { if (e.target === modal) closeForm(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeForm(); });
+
+document.getElementById('leadForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nome = document.getElementById('fNome').value.trim();
+  const fone = document.getElementById('fFone').value.trim();
+  if (!nome || !fone) return;
+  if (CONFIG.crmEndpoint){
+    try { await fetch(CONFIG.crmEndpoint, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ nome, telefone: fone, origem:'link-bio', tipo: CURRENT_FORM.titulo||'', data: new Date().toISOString() }) });
+    } catch(err){}
+  }
+  const base = CURRENT_FORM.msg || 'Olá! Vim pelo link da bio.';
+  window.open(waLink(`${base}\n\nNome: ${nome}\nTelefone: ${fone}`), '_blank');
+  closeForm();
+});
+
+/* Bolhas (theme=ocean) */
+(function makeBubbles(){
+  if (CONFIG.theme.background !== 'ocean') return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const host = document.getElementById('bubbles'); const N = 14;
+  for (let i=0;i<N;i++){
+    const b = document.createElement('span'); b.className='bubble';
+    const size = 6 + ((i*37)%22); b.style.width=b.style.height=size+'px';
+    b.style.left = ((i*53)%100)+'%';
+    b.style.animationDuration = (10 + (i%7)*2) + 's';
+    b.style.animationDelay = ((i%12)) + 's';
+    host.appendChild(b);
+  }
+})();
+</script>
+</body>
+</html>
