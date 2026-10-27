@@ -177,6 +177,20 @@ function setupLeadForm(form) {
       if (f.type === 'email' && val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { f.classList.add('field-error'); ok = false; }
       if (f.type === 'tel' && val && val.replace(/\D/g, '').length < 10) { f.classList.add('field-error'); ok = false; }
     });
+    // a2p-2026-10-27: phone is optional (A2P 10DLC). Estimate forms need phone OR email.
+    const tel = active.querySelector('input[type="tel"]');
+    const mail = active.querySelector('input[type="email"]');
+    if (tel) {
+      tel.classList.remove('field-error');
+      const tv = (tel.value || '').trim();
+      if (tv && tv.replace(/\D/g, '').length < 10) { tel.classList.add('field-error'); ok = false; }
+      if (mail) {
+        const mv = (mail.value || '').trim();
+        if (mv && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mv)) { mail.classList.add('field-error'); ok = false; }
+        if (!tv && !mv) { tel.classList.add('field-error'); mail.classList.add('field-error'); ok = false; }
+        else if (mv) { mail.classList.remove('field-error'); }
+      }
+    }
     return ok;
   };
 
@@ -211,8 +225,10 @@ function setupLeadForm(form) {
       if (typeof gtag === 'function') gtag('event', 'generate_lead', { lead_type: leadType, lead_method: isCallForm ? 'call_request' : 'form', page_path: location.pathname });
     } catch (err) { /* analytics never blocks the lead */ }
 
+    // a2p-2026-10-27: call popup with no number = just place the call (nothing to save)
+    const hasContact = ((payload.phone || '').replace(/\D/g, '').length >= 10) || ((payload.email || '').trim() !== '');
     try {
-      await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (hasContact) await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
     } catch (err) { /* proxy also logs a fallback copy; never block the call */ }
     finally {
       if (btn) { btn.innerHTML = orig; btn.disabled = false; }

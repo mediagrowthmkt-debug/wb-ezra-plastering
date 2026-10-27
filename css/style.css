@@ -764,3 +764,12 @@ body.ezmodal-open { overflow: hidden; }
 .seq-card__link { font-weight: 700; font-size: .9rem; color: var(--color-primary); }
 @media (max-width: 992px) { .seq-list { grid-template-columns: 1fr; } }
 @media (max-width: 767px) { .seq-frame .pf-frame__label { top: 6px; left: 6px; font-size: .58rem; padding: 3px 6px; } .seq-card__body { padding: 16px 16px 20px; } }
+
+/* a2p-2026-10-27: opt-in de SMS e avisos legais */
+.form-consent{margin:6px 0 14px;text-align:left}
+.form-consent__item{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px;font-size:12.5px;line-height:1.5;color:var(--color-text-muted,#5B6472);font-weight:400;cursor:pointer}
+.form-consent__item input{flex:0 0 auto;width:18px;height:18px;margin-top:2px;accent-color:var(--color-primary)}
+.form-legal{font-size:12px;line-height:1.5;color:var(--color-text-muted,#5B6472);margin:4px 0 12px;text-align:left}
+.form-legal a,.footer__legal a{text-decoration:underline;text-underline-offset:2px}
+.footer__legal{margin-top:4px}
+.form-hint{font-size:12.5px;color:var(--color-text-muted,#5B6472);margin:-4px 0 10px}
