@@ -120,7 +120,7 @@ function setupLeadForm(form) {
   const endpoint = form.dataset.endpoint || 'https://mediagrowth.com.br/ezra-lead-api/api.php';
   const leadType = form.dataset.leadType || 'Estimate form';
   const isCallForm = form.classList.contains('lead-form--call') || /call/i.test(leadType);
-  const OWNER_TEL = 'tel:+16174617575';
+  const OWNER_TEL = 'tel:+17814806850';
   const steps = Array.from(form.querySelectorAll('.lead-step'));
   const bar = form.querySelector('.lead-form__bar');
   const labels = Array.from(form.querySelectorAll('.lead-form__steplabel'));
