@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://ezraplastering.com/sitemap.xml
+Sitemap: https://ezraplastering.com/sitemap-services.xml
