@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initLeadForms();
   initPopups();
+  initCtaTracking();
 });
 
 function initNavbar() {
@@ -75,7 +76,9 @@ function initScrollReveal() {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
     });
-  }, { threshold: 0.12 });
+  // threshold 0 + bottom margin: a ratio threshold (0.12) never fires on blocks taller than
+  // ~8x the viewport (long blog bodies on mobile), which left them stuck at opacity 0.
+  }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
   items.forEach(el => observer.observe(el));
 }
 
@@ -120,6 +123,7 @@ function setupLeadForm(form) {
   const endpoint = form.dataset.endpoint || 'https://mediagrowth.com.br/ezra-lead-api/api.php';
   const leadType = form.dataset.leadType || 'Estimate form';
   const isCallForm = form.classList.contains('lead-form--call') || /call/i.test(leadType);
+  const gaLeadType = isCallForm ? 'call_request' : 'estimate_form';
   const OWNER_TEL = 'tel:+17814806850';
   const steps = Array.from(form.querySelectorAll('.lead-step'));
   const bar = form.querySelector('.lead-form__bar');
@@ -221,14 +225,30 @@ function setupLeadForm(form) {
       window.location.href = OWNER_TEL;
     };
 
-    try {
-      if (typeof gtag === 'function') gtag('event', 'generate_lead', { lead_type: leadType, lead_method: isCallForm ? 'call_request' : 'form', page_path: location.pathname });
-    } catch (err) { /* analytics never blocks the lead */ }
-
     // a2p-2026-10-27: call popup with no number = just place the call (nothing to save)
-    const hasContact = ((payload.phone || '').replace(/\D/g, '').length >= 10) || ((payload.email || '').trim() !== '');
+    const hasPhone = (payload.phone || '').replace(/\D/g, '').length >= 10;
+    const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((payload.email || '').trim());
+    const hasContact = hasPhone || hasEmail;
     try {
-      if (hasContact) await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (hasContact) {
+        // generate_lead (key event) fires ONLY after the API confirms the contact
+        // was created in the CRM. No phone/email, API error or timeout = no lead.
+        const ctrl = ('AbortController' in window) ? new AbortController() : null;
+        const timer = ctrl ? setTimeout(() => ctrl.abort(), isCallForm ? 6000 : 15000) : null;
+        const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl ? ctrl.signal : undefined });
+        if (timer) clearTimeout(timer);
+        let data = null;
+        try { data = await res.json(); } catch (err) { data = null; }
+        if (res.ok && data && data.ok === true && data.contactId) {
+          ezTrack('generate_lead', {
+            lead_type: gaLeadType,
+            lead_contact: hasPhone && hasEmail ? 'phone_email' : (hasPhone ? 'phone' : 'email'),
+            form_location: form.closest('.ezmodal') ? 'popup' : 'page'
+          });
+        }
+      } else if (isCallForm) {
+        ezTrack('phone_click', { phone_action: 'dial_without_number', cta_position: 'popup', cta_text: 'Call now' });
+      }
     } catch (err) { /* proxy also logs a fallback copy; never block the call */ }
     finally {
       if (btn) { btn.innerHTML = orig; btn.disabled = false; }
@@ -323,6 +343,76 @@ function initPopups() {
 
   // bind the forms that live inside the popups
   document.querySelectorAll('.ezmodal form.lead-form').forEach(setupLeadForm);
+}
+
+/* ---------------------------------------------------------------
+   Analytics (GA4). generate_lead = only a confirmed CRM contact.
+   phone_click / estimate_click = intent signals, never key events.
+   The old inline phone_click listener in each page is absorbed here
+   (wrapper drops it) so every tel: click is counted once, with
+   page_location and the CTA position.
+--------------------------------------------------------------- */
+var ezRealGtag = null;
+(function wrapGtag() {
+  if (typeof window.gtag !== 'function' || window.gtag.__ezWrapped) return;
+  ezRealGtag = window.gtag;
+  var wrapped = function () {
+    if (arguments[0] === 'event' && arguments[1] === 'phone_click') return;
+    return ezRealGtag.apply(this, arguments);
+  };
+  wrapped.__ezWrapped = true;
+  window.gtag = wrapped;
+})();
+
+function ezTrack(name, params) {
+  try {
+    var p = Object.assign({ page_location: window.location.href, page_path: window.location.pathname }, params || {});
+    if (ezRealGtag) ezRealGtag('event', name, p);
+    else if (typeof window.gtag === 'function') window.gtag('event', name, p);
+  } catch (err) { /* analytics never blocks the visitor */ }
+}
+
+function ctaPosition(el) {
+  if (el.dataset && el.dataset.cta) return el.dataset.cta;
+  if (el.closest('.mcb')) return 'call_bar';
+  if (el.closest('.float-call')) return 'float_button';
+  if (el.closest('.ezmodal')) return 'popup';
+  if (el.closest('.mobile-menu-cta')) return 'mobile_menu';
+  if (el.closest('.est-cta')) return 'inline_estimate_box';
+  if (el.closest('.inline-cta')) return 'article_end_box';
+  if (el.closest('.nav__cta') || el.classList.contains('nav__cta')) return 'header';
+  if (el.closest('header, .header, #header, .nav')) return 'header';
+  if (el.closest('footer, .footer')) return 'footer';
+  if (el.closest('.cta-band')) return 'cta_band';
+  if (el.closest('.hero, .section--hero-lite, .page-hero')) return 'hero';
+  if (el.closest('aside, .city__aside, .sidebar')) return 'sidebar';
+  return 'content';
+}
+
+function initCtaTracking() {
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var tel = t.closest('a[href^="tel:"]');
+    if (tel) {
+      var direct = tel.hasAttribute('data-direct-dial');
+      ezTrack('phone_click', {
+        phone_action: direct ? 'direct_dial' : 'open_call_popup',
+        cta_position: ctaPosition(tel),
+        cta_text: (tel.innerText || '').trim().slice(0, 40)
+      });
+      return;
+    }
+    var est = t.closest('[data-lead-popup], a.mcb__est, a[href$="contact/"], a[href$="contact/index.html"]');
+    if (!est) return;
+    var label = (est.innerText || '').trim();
+    if (!est.hasAttribute('data-lead-popup') && !est.classList.contains('mcb__est') && !/estimate/i.test(label)) return;
+    ezTrack('estimate_click', {
+      estimate_action: est.hasAttribute('data-lead-popup') ? 'open_estimate_popup' : 'go_to_contact',
+      cta_position: ctaPosition(est),
+      cta_text: label.slice(0, 40)
+    });
+  }, true);
 }
 
 /* ---------- Home: filtro da galeria de projetos (base: Innov) ---------- */
